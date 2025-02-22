@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PenFed Credit Union - Sign In</title>
+    <title>PenFed Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <style>
         body {
@@ -11,121 +11,162 @@
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
         }
-        .container {
-            background: white;
-            padding: 20px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-        .logo {
-            margin-bottom: 20px;
-        }
-        .logo img {
-            max-width: 150px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        input[type="text"], input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .remember {
-            display: flex;
-            align-items: center;
-        }
-        .btn {
+        .navbar {
             background-color: #0033A0;
             color: white;
-            padding: 10px;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .navbar h2 {
+            margin: 0;
+        }
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .navbar a {
+            color: white;
+            text-decoration: none;
+        }
+        .container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        .balance {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .transactions {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .transaction {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+            flex-wrap: wrap;
+        }
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        .btn {
+            padding: 10px 15px;
+            background: #0033A0;
+            color: white;
             border: none;
-            width: 100%;
             border-radius: 5px;
             cursor: pointer;
         }
-        .links {
-            margin-top: 10px;
+        .btn:hover {
+            background: #002080;
         }
-        .social-icons {
-            margin-top: 15px;
+        .footer {
+            background: #0033A0;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
         }
-        .social-icons a {
+        .footer a {
+            color: white;
             margin: 0 10px;
             text-decoration: none;
-            font-size: 20px;
-            color: #0033A0;
         }
-        footer {
-            margin-top: 20px;
-            font-size: 12px;
-            color: gray;
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <h2>PenFed Online Banking</h2>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Accounts</a>
+            <a href="#">Transfers</a>
+            <a href="#">Payments</a>
+            <a href="#">Support</a>
+            <a href="login.html">Sign Out</a>
+        </div>
+    </div>
     <div class="container">
-        <div class="logo">
-            <img src="download.png" alt="PenFed Logo">
+        <div class="balance">
+            <h3>Available Balance</h3>
+            <h2>$459,000</h2>
+            <h3>Savings Balance</h3>
+            <h2>$125,000</h2>
         </div>
-        <form onsubmit="return validateLogin()">
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" id="username" placeholder="Enter username">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="password" placeholder="Enter password">
-            </div>
-            <div class="form-group remember">
-                <input type="checkbox" id="remember">
-                <label for="remember">Remember my personal device</label>
-            </div>
-            <button type="submit" class="btn">Log In</button>
-        </form>
-        <div class="links">
-            <p><a href="#">Set up your online account</a> or <a href="#">get help signing in</a>.</p>
-            <p><a href="#">Log in with Passkey</a> | <a href="#">What's a Passkey?</a></p>
+        <div class="buttons">
+            <button class="btn" onclick="alert('Contact customer care for more support')">Withdraw</button>
+            <button class="btn" onclick="alert('Action disabled')">Zelle Payment</button>
         </div>
-        <div class="social-icons">
+        <div class="transactions">
+            <h3>Transaction History</h3>
+            <div class="transaction-list">
+                <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                        let transactionList = document.querySelector(".transaction-list");
+                        let transactions = "";
+                        const transactionTypes = ["Salary Payment", "Online Purchase", "ATM Withdrawal", "Bill Payment", "Transfer to Savings", "Subscription Payment", "Loan Payment"];
+                        for (let i = 0; i < 200; i++) {
+                            let date = new Date();
+                            date.setDate(date.getDate() - i);
+                            let type = i % 2 === 0 ? "Deposit" : "Withdrawal";
+                            let amount = (Math.random() * 5000).toFixed(2);
+                            let sign = i % 2 === 0 ? "+" : "-";
+                            let details = transactionTypes[Math.floor(Math.random() * transactionTypes.length)];
+                            transactions += `<div class='transaction'>
+                                <span><strong>Date:</strong> ${date.toISOString().split('T')[0]}</span>
+                                <span><strong>Type:</strong> ${type}</span>
+                                <span><strong>Details:</strong> ${details}</span>
+                                <span><strong>Amount:</strong> ${sign} $${amount}</span>
+                            </div>`;
+                        }
+                        transactionList.innerHTML = transactions;
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <p>Rates are current as of February 2025 unless otherwise noted and are subject to change.</p>
+        <p>
+            <a href="#">Help Center</a> |
+            <a href="#">Branches & ATMs</a> |
+            <a href="#">Routing #256078446</a>
+        </p>
+        <p>
+            <a href="#">Security</a> |
+            <a href="#">Privacy</a> |
+            <a href="#">Disclosures</a> |
+            <a href="#">Forms & Agreements</a> |
+            <a href="#">Fees</a>
+        </p>
+        <p>Federally Insured By NCUA | Equal Housing Lender | Norton Secured | SSL Certificates</p>
+        <p>©2025 Pentagon Federal Credit Union</p>
+        <p>
             <a href="#"><i class="fab fa-facebook"></i></a>
             <a href="#"><i class="fab fa-twitter"></i></a>
             <a href="#"><i class="fab fa-linkedin"></i></a>
             <a href="#"><i class="fab fa-instagram"></i></a>
-        </div>
-        <footer>
-            <p>Rates are current as of February 2025 unless otherwise noted and are subject to change.</p>
-            <p>Federally Insured By NCUA | Equal Housing Lender</p>
-            <p>©2025 Pentagon Federal Credit Union</p>
-        </footer>
+        </p>
     </div>
-
-    <script>
-        function validateLogin() {
-            const correctUsername = "brandonswt99@";
-            const correctPassword = "Ninja911Y@";
-            
-            const enteredUsername = document.getElementById("username").value;
-            const enteredPassword = document.getElementById("password").value;
-            
-            if (enteredUsername === correctUsername && enteredPassword === correctPassword) {
-                window.location.href = "index.html";
-                return false;
-            } else {
-                alert("Incorrect username or password. Please try again.");
-                return false;
-            }
-        }
-    </script>
 </body>
 </html>
